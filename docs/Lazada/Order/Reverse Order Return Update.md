@@ -38,27 +38,13 @@ Seller can use this API to action on return and refund related.
 
 ### Common Parameters
 ---
-#### Service Endpoints
-
-| Region        | Endpoint |
-| :---          | :----    |
-| Malaysia      | https://api.lazada.com.my/rest |
-| Singapore     | https://api.lazada.sg/rest |
-| Thailand      | https://api.lazada.co.th/rest |
-| Philippines   | https://api.lazada.com.ph/rest |
-| Vietnam       | https://api.lazada.vn/rest |
-| Indonesia     | https://api.lazada.co.id/rest |
-
 
 #### Common Request Parameters
 ---
-| Name          | Type     | Required  | Description  |
-| :---          | :---     | :---       | :---          |
-| app_key       | String   | <Highlight2>true</Highlight2>     | Unique app ID issued by LAZOP console when you apply for an app category       |
-| timestamp     | String   | <Highlight2>true</Highlight2>      | The time stamp of the request e.g. 1517820392000 (which translates to 5 February 2018 08:46:32) with less than 7200s difference from UTC time       |
-| access_token  | String   | false   | API interface call credentials       |
-| sign_method   | String   | <Highlight2>true</Highlight2>      | The HMAC hash algorithm you are using to calculate your signature       |
-| sign          | String   | <Highlight2>true</Highlight2>      | Part of the authentication process that is used for identifying and verifying who is sending a request (click [here](https://open.lazada.com/doc/doc.htm?spm=a2o9m.11193535.0.0.2d4938e4s5pgkx#?nodeId=10450&docId=108068) for details)       |
+| Name      | Type   | Required                      | Description                         |
+| :-------- | :----- | :---------------------------- | :---------------------------------- |
+| seller_id | String | <Highlight2>true</Highlight2> | Seller store id                     |
+| country   | String | <Highlight2>true</Highlight2> | Seller country, Ex: MY,SG,ID,TH,etc |
 
 ### Request Parameters
 ---
@@ -125,84 +111,6 @@ Seller can use this API to action on return and refund related.
 | --reason_name                         | String     | out of stock                             | reason name |
 | -total_refund                         | String     | 0                                        | total refund amount |
 
-
-### Request Example
----
-```md title="JAVA"
-LazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.setApiName("/order/reverse/return/update");
-request.setHttpMethod("GET");
-request.addApiParameter("action", "instantRefund");
-request.addApiParameter("reverse_order_id", "0");
-request.addApiParameter("reverse_order_item_ids", "[]");
-request.addApiParameter("reason_id", "0");
-request.addApiParameter("comment", "comment");
-request.addApiParameter("image_info", "[{\"name\":\"name\",\"url\":\"url\"}]");
-LazopResponse response = client.execute(request);
-System.out.println(response.getBody());
-Thread.sleep(10);
-```
-
-```md title="PHP"
-$c = new LazopClient(url,appkey,appSecret);
-$request = new LazopRequest('/order/reverse/return/update','GET');
-$request->addApiParam('action','instantRefund');
-$request->addApiParam('reverse_order_id','0');
-$request->addApiParam('reverse_order_item_ids','[]');
-$request->addApiParam('reason_id','0');
-$request->addApiParam('comment','comment');
-$request->addApiParam('image_info','[{\"name\":\"name\",\"url\":\"url\"}]');
-var_dump($c->execute($request));
-```
-
-```md title=".NET"
-ILazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.SetApiName("/order/reverse/return/update");
-request.SetHttpMethod("GET");
-request.AddApiParameter("action", "instantRefund");
-request.AddApiParameter("reverse_order_id", "0");
-request.AddApiParameter("reverse_order_item_ids", "[]");
-request.AddApiParameter("reason_id", "0");
-request.AddApiParameter("comment", "comment");
-request.AddApiParameter("image_info", "[{\"name\":\"name\",\"url\":\"url\"}]");
-LazopResponse response = client.Execute(request);
-Console.WriteLine(response.IsError());
-Console.WriteLine(response.Body);
-```
-
-```md title="RUBY"
-client = LazopApiClient::Client.new(url, appkey, appSecret)
-request = LazopApiClient::Request.new('/order/reverse/return/update','GET')
-request.add_api_parameter("action", "instantRefund")
-request.add_api_parameter("reverse_order_id", "0")
-request.add_api_parameter("reverse_order_item_ids", "[]")
-request.add_api_parameter("reason_id", "0")
-request.add_api_parameter("comment", "comment")
-request.add_api_parameter("image_info", "[{\"name\":\"name\",\"url\":\"url\"}]")
-response = client.execute(request)
-puts response.success?
-puts response.body
-```
-
-```md title="PYTHON"
-client = lazop.LazopClient(url, appkey ,appSecret)
-request = lazop.LazopRequest('/order/reverse/return/update','GET')
-request.add_api_param('action', 'instantRefund')
-request.add_api_param('reverse_order_id', '0')
-request.add_api_param('reverse_order_item_ids', '[]')
-request.add_api_param('reason_id', '0')
-request.add_api_param('comment', 'comment')
-request.add_api_param('image_info', '[{\"name\":\"name\",\"url\":\"url\"}]')
-response = client.execute(request)
-print(response.type)
-print(response.body)
-```
-
-```md title="CURL"
-curl -X GET url + '/order/reverse/return/update?timestamp=1656146349396&app_key=12345678&sign_method=sha256&sign=D13F2A03BE94D9AAE9F933FFA7B13E0A5AD84A3DAEBC62A458A3C382EC2E91EC&action=instantRefund&reverse_order_id=0&reverse_order_item_ids=%5B%5D&reason_id=0&comment=comment&image_info=%5B%7B%22name%22%3A%22name%22%2C%22url%22%3A%22url%22%7D%5D'
-```
 
 ### Response Example
 ---
@@ -290,7 +198,3 @@ curl -X GET url + '/order/reverse/return/update?timestamp=1656146349396&app_key=
 | 125	                | E0125: invalid reverse id	                    | E0125: invalid reverse id |
 | 126	                | E0126: invalid reverse order lines	        | E0126: invalid reverse order lines |
 | 127	                | E0127: invalid seller id for this reverse order line	| E0127: invalid seller id for this reverse order line |  
-
-### API Test Tools
----
-[API Test Tool](https://iopaccount.lazada.com/login?redirect_url=http://open.lazada.com/app/index.htm#/api/test?apiPath=%2Forder%2Fget&appkey=100132)

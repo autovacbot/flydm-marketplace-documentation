@@ -38,26 +38,13 @@ create a new seller voucher promotion
 
 ### Common Parameters
 ---
-#### Service Endpoints
-
-| Region        | Endpoint |
-| :---          | :----    |
-| Malaysia      | https://api.lazada.com.my/rest |
-| Vietnam       | https://api.lazada.vn/rest |
-| Thailand      | https://api.lazada.co.th/rest |
-| Singapore     | https://api.lazada.sg/rest |
-| Philippines   | https://api.lazada.com.ph/rest |
-| Indonesia     | https://api.lazada.co.id/rest |
 
 #### Common Request Parameters
 ---
-| Name          | Type     | Required  | Description  |
-| :---          | :---     | :---       | :---          |
-| app_key       | String   | <Highlight2>true</Highlight2>     | Unique app ID issued by LAZOP console when you apply for an app category       |
-| timestamp     | String   | <Highlight2>true</Highlight2>      | The time stamp of the request e.g. 1517820392000 (which translates to 5 February 2018 08:46:32) with less than 7200s difference from UTC time       |
-| access_token  | String   | <Highlight2>true</Highlight2>      | API interface call credentials       |
-| sign_method   | String   | <Highlight2>true</Highlight2>      | The HMAC hash algorithm you are using to calculate your signature       |
-| sign          | String   | <Highlight2>true</Highlight2>      | Part of the authentication process that is used for identifying and verifying who is sending a request (click [here](https://open.lazada.com/doc/doc.htm?spm=a2o9m.11193535.0.0.2d4938e4s5pgkx#?nodeId=10450&docId=108068) for details)       |
+| Name      | Type   | Required                      | Description                         |
+| :-------- | :----- | :---------------------------- | :---------------------------------- |
+| seller_id | String | <Highlight2>true</Highlight2> | Seller store id                     |
+| country   | String | <Highlight2>true</Highlight2> | Seller country, Ex: MY,SG,ID,TH,etc |
 
 ### Request Parameters
 ---
@@ -115,142 +102,6 @@ Voucher limit per customer|
 | error_code                            | Number	 | null                                     | error code
 | error_msg                             | String	 | null                                     | error message| 
 
-### Request Example
----
-```md title="JAVA"
-LazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.setApiName("/promotion/voucher/create");
-request.addApiParameter("criteria_over_money", "100");
-request.addApiParameter("voucher_type", "COLLECTIBLE_VOUCHER");
-request.addApiParameter("apply", "SPECIFIC_PRODUCTS");
-request.addApiParameter("collect_start", "1625649720000");
-request.addApiParameter("display_area", "REGULAR_CHANNEL");
-request.addApiParameter("period_end_time", "1630339199000");
-request.addApiParameter("voucher_name", "test voucher");
-request.addApiParameter("voucher_discount_type", "MONEY_VALUE_OFF");
-request.addApiParameter("offering_money_value_off", "1");
-request.addApiParameter("period_start_time", "1626969600000");
-request.addApiParameter("limit", "1");
-request.addApiParameter("issued", "5");
-request.addApiParameter("max_discount_offering_money_value", "50");
-request.addApiParameter("offering_percentage_discount_off", "1");
-LazopResponse response = client.execute(request, accessToken);
-System.out.println(response.getBody());
-Thread.sleep(10);
-```
-
-```md title="PHP"
-$c = new LazopClient(url,appkey,appSecret);
-$request = new LazopRequest('/promotion/voucher/create');
-$request->addApiParam('criteria_over_money','100');
-$request->addApiParam('voucher_type','COLLECTIBLE_VOUCHER');
-$request->addApiParam('apply','SPECIFIC_PRODUCTS');
-$request->addApiParam('collect_start','1625649720000');
-$request->addApiParam('display_area','REGULAR_CHANNEL');
-$request->addApiParam('period_end_time','1630339199000');
-$request->addApiParam('voucher_name','test voucher');
-$request->addApiParam('voucher_discount_type','MONEY_VALUE_OFF');
-$request->addApiParam('offering_money_value_off','1');
-$request->addApiParam('period_start_time','1626969600000');
-$request->addApiParam('limit','1');
-$request->addApiParam('issued','5');
-$request->addApiParam('max_discount_offering_money_value','50');
-$request->addApiParam('offering_percentage_discount_off','1');
-var_dump($c->execute($request, $accessToken));
-```
-
-```md title=".NET"
-ILazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.SetApiName("/promotion/voucher/create");
-request.AddApiParameter("criteria_over_money", "100");
-request.AddApiParameter("voucher_type", "COLLECTIBLE_VOUCHER");
-request.AddApiParameter("apply", "SPECIFIC_PRODUCTS");
-request.AddApiParameter("collect_start", "1625649720000");
-request.AddApiParameter("display_area", "REGULAR_CHANNEL");
-request.AddApiParameter("period_end_time", "1630339199000");
-request.AddApiParameter("voucher_name", "test voucher");
-request.AddApiParameter("voucher_discount_type", "MONEY_VALUE_OFF");
-request.AddApiParameter("offering_money_value_off", "1");
-request.AddApiParameter("period_start_time", "1626969600000");
-request.AddApiParameter("limit", "1");
-request.AddApiParameter("issued", "5");
-request.AddApiParameter("max_discount_offering_money_value", "50");
-request.AddApiParameter("offering_percentage_discount_off", "1");
-LazopResponse response = client.Execute(request, accessToken);
-Console.WriteLine(response.IsError());
-Console.WriteLine(response.Body);
-```
-
-```md title="RUBY"
-client = LazopApiClient::Client.new(url, appkey, appSecret)
-request = LazopApiClient::Request.new('/promotion/voucher/create')
-request.add_api_parameter("criteria_over_money", "100")
-request.add_api_parameter("voucher_type", "COLLECTIBLE_VOUCHER")
-request.add_api_parameter("apply", "SPECIFIC_PRODUCTS")
-request.add_api_parameter("collect_start", "1625649720000")
-request.add_api_parameter("display_area", "REGULAR_CHANNEL")
-request.add_api_parameter("period_end_time", "1630339199000")
-request.add_api_parameter("voucher_name", "test voucher")
-request.add_api_parameter("voucher_discount_type", "MONEY_VALUE_OFF")
-request.add_api_parameter("offering_money_value_off", "1")
-request.add_api_parameter("period_start_time", "1626969600000")
-request.add_api_parameter("limit", "1")
-request.add_api_parameter("issued", "5")
-request.add_api_parameter("max_discount_offering_money_value", "50")
-request.add_api_parameter("offering_percentage_discount_off", "1")
-response = client.execute(request, accessToken)
-puts response.success?
-puts response.body
-```
-
-```md title="PYTHON"
-client = lazop.LazopClient(url, appkey ,appSecret)
-request = lazop.LazopRequest('/promotion/voucher/create')
-request.add_api_param('criteria_over_money', '100')
-request.add_api_param('voucher_type', 'COLLECTIBLE_VOUCHER')
-request.add_api_param('apply', 'SPECIFIC_PRODUCTS')
-request.add_api_param('collect_start', '1625649720000')
-request.add_api_param('display_area', 'REGULAR_CHANNEL')
-request.add_api_param('period_end_time', '1630339199000')
-request.add_api_param('voucher_name', 'test voucher')
-request.add_api_param('voucher_discount_type', 'MONEY_VALUE_OFF')
-request.add_api_param('offering_money_value_off', '1')
-request.add_api_param('period_start_time', '1626969600000')
-request.add_api_param('limit', '1')
-request.add_api_param('issued', '5')
-request.add_api_param('max_discount_offering_money_value', '50')
-request.add_api_param('offering_percentage_discount_off', '1')
-response = client.execute(request, access_token)
-print(response.type)
-print(response.body)
-```
-
-```md title="CURL"
-curl -X POST url + '/promotion/voucher/create' \
--H 'Content-Type:application/x-www-form-urlencoded;charset=utf-8' \
--d 'app_key=12345678' \
--d 'timestamp=1655964758029' \
--d 'access_token=37c66819338b4562e17675b8c5c4dbd0' \
--d 'sign_method=sha256' \
--d 'sign=D13F2A03BE94D9AAE9F933FFA7B13E0A5AD84A3DAEBC62A458A3C382EC2E91EC' \
--d 'criteria_over_money=100' \
--d 'voucher_type=COLLECTIBLE_VOUCHER' \
--d 'apply=SPECIFIC_PRODUCTS' \
--d 'collect_start=1625649720000' \
--d 'display_area=REGULAR_CHANNEL' \
--d 'period_end_time=1630339199000' \
--d 'voucher_name=test+voucher' \
--d 'voucher_discount_type=MONEY_VALUE_OFF' \
--d 'offering_money_value_off=1' \
--d 'period_start_time=1626969600000' \
--d 'limit=1' \
--d 'issued=5' \
--d 'max_discount_offering_money_value=50' \
--d 'offering_percentage_discount_off=1' \
-```
-
 ### Response Example
 ---
 ```
@@ -284,7 +135,3 @@ curl -X POST url + '/promotion/voucher/create' \
 | 24	                | E024: Parameter illegal	    | Parameter illegal| 
 | 25	                | E025: UMP Exception	        | UMP Exception| 
 | 26	                | E026: Seller Unauthorized	    | Seller Unauthorized| 
-
-### API Test Tools
----
-[API Test Tool](https://iopaccount.lazada.com/login?redirect_url=http://open.lazada.com/app/index.htm#/api/test?apiPath=%2Forder%2Fget&appkey=100132)
