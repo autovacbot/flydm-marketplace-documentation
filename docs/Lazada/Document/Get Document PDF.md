@@ -34,6 +34,7 @@ style={{
 
 <Highlight color="#00A854">GET</Highlight> <Highlight1 color="#EEEEEE">/order/document/awb/pdf/get</Highlight1>
 
+
 Use this API to retrieve order-related documents, only for shipping labels.
 
 ### Common Parameters
