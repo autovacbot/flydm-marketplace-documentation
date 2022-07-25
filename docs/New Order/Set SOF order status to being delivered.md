@@ -38,29 +38,12 @@ Use this API to cancel a single order item.
 
 ### Common Parameters
 ---
-#### Service Endpoints
-
-| Region        | Endpoint |
-| :---          | :----    |
-| Philippines   | https://api.lazada.com.ph/rest |
-| Vietnam       | https://api.lazada.vn/rest |
-| Singapore     | https://api.lazada.sg/rest |
-| Indonesia     | https://api.lazada.co.id/rest |
-| Malaysia      | https://api.lazada.com.my/rest |
-| Thailand      | https://api.lazada.co.th/rest |
-
-
-
-
 #### Common Request Parameters
 ---
-| Name          | Type     | Required  | Description  |
-| :---          | :---     | :---       | :---          |
-| app_key       | String   | <Highlight2>true</Highlight2>     | Unique app ID issued by LAZOP console when you apply for an app category       |
-| timestamp     | String   | <Highlight2>true</Highlight2>      | The time stamp of the request e.g. 1517820392000 (which translates to 5 February 2018 08:46:32) with less than 7200s difference from UTC time       |
-| access_token  | String   | <Highlight2>true</Highlight2>      | API interface call credentials       |
-| sign_method   | String   | <Highlight2>true</Highlight2>      | The HMAC hash algorithm you are using to calculate your signature       |
-| sign          | String   | <Highlight2>true</Highlight2>      | Part of the authentication process that is used for identifying and verifying who is sending a request (click [here](https://open.lazada.com/doc/doc.htm?spm=a2o9m.11193535.0.0.2d4938e4s5pgkx#?nodeId=10450&docId=108068) for details)       |
+| Name      | Type   | Required                      | Description                         |
+| :-------- | :----- | :---------------------------- | :---------------------------------- |
+| seller_id | String | <Highlight2>true</Highlight2> | Seller store id                     |
+| country   | String | <Highlight2>true</Highlight2> | Seller country, Ex: MY,SG,ID,TH,etc |
 
 ### Request Parameters
 ---
@@ -105,65 +88,6 @@ Use this API to cancel a single order item.
 | --purchase_order_id                   | Number     | 456789                                   | Seller Center identification.  Optional, please ignore it if your business scenario does not cover it.   |
 | --purchase_order_number               | String     | ABC-123456                               | Order number in the Seller Center.  Optional, please ignore it if your business scenario does not cover it.   |
 
-
-### Request Example
----
-```md title="JAVA"
-LazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.setApiName("/order/sof/delivered");
-request.addApiParameter("order_item_ids", "[1832590,1832592]");
-LazopResponse response = client.execute(request, accessToken);
-System.out.println(response.getBody());
-Thread.sleep(10);
-```
-
-```md title="PHP"
-$c = new LazopClient(url,appkey,appSecret);
-$request = new LazopRequest('/order/sof/delivered');
-$request->addApiParam('order_item_ids','[1832590,1832592]');
-var_dump($c->execute($request, $accessToken));
-```
-
-```md title=".NET"
-ILazopClient client = new LazopClient(url, appkey, appSecret);
-LazopRequest request = new LazopRequest();
-request.SetApiName("/order/sof/delivered");
-request.AddApiParameter("order_item_ids", "[1832590,1832592]");
-LazopResponse response = client.Execute(request, accessToken);
-Console.WriteLine(response.IsError());
-Console.WriteLine(response.Body);
-
-```
-
-```md title="RUBY"
-client = LazopApiClient::Client.new(url, appkey, appSecret)
-request = LazopApiClient::Request.new('/order/sof/delivered')
-request.add_api_parameter("order_item_ids", "[1832590,1832592]")
-response = client.execute(request, accessToken)
-puts response.success?
-puts response.body
-```
-
-```md title="PYTHON"
-client = lazop.LazopClient(url, appkey ,appSecret)
-request = lazop.LazopRequest('/order/sof/delivered')
-request.add_api_param('order_item_ids', '[1832590,1832592]')
-response = client.execute(request, access_token)
-print(response.type)
-print(response.body)
-```
-
-```md title="CURL"
-curl -X POST url + '/order/sof/delivered' \
--H 'Content-Type:application/x-www-form-urlencoded;charset=utf-8' \
--d 'app_key=12345678' \
--d 'timestamp=1655866057650' \
--d 'access_token=37c66819338b4562e17675b8c5c4dbd0' \
--d 'sign_method=sha256' \
--d 'sign=D13F2A03BE94D9AAE9F933FFA7B13E0A5AD84A3DAEBC62A458A3C382EC2E91EC' \
--d 'order_item_ids=%5B1832590%2C1832592%5D' \
-```
 
 ### Response Example
 ---
@@ -210,7 +134,3 @@ curl -X POST url + '/order/sof/delivered' \
 | 1007	            | E1007: %s not SOF Order Item ID	  | The specified order items must be SOF Order Item ID |
 | 1008	            | E1008: %s order item status is not ready_to_ship	| The specified order items must have status Ready To Ship |
 
-
-### API Test Tools
----
-[API Test Tool](https://iopaccount.lazada.com/login?redirect_url=http://open.lazada.com/app/index.htm#/api/test?apiPath=%2Forder%2Fget&appkey=100132)
